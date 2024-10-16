@@ -23,7 +23,7 @@ resource "azurerm_web_application_firewall_policy" "myapp2waf" {
       match_values       = ["192.168.1.0/24", "10.0.0.0/24"]
     }
 
-    action = "Block"
+    action = "Allow"
   }
 
   custom_rules {
