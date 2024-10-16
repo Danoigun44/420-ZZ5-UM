@@ -8,7 +8,7 @@ variable "client_id"{
   type=string
   default= "var.cb593eaa-b094-4dbf-b52e-316a5aa247a7"
 }
-variable "client_secret"{
+variable "Client_secret"{
   type=string
   default= "var.DrT8Q~8y34-Qi5txMQOcMd_HQTZ1bSee4DhYKaDG"
 }
