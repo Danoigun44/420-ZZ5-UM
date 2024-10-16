@@ -26,6 +26,7 @@ variable "account_tier"{
 }
 variable "myname"{
   type=string
+  default= "mydanoapp"
 }
 variable "account_replication_type"{
   type=string
