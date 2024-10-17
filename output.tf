@@ -79,3 +79,4 @@ output "character_enemy_output" {
 }
 output "myappoutput" {
 value= var.list_of_string
+}
