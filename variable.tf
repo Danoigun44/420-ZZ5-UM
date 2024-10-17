@@ -48,3 +48,8 @@ variable "environment"{
  type=string
  default="staging"
 }
+variable "list_of_string" {
+type=list(string)
+default= ["name","resource"]
+}
+
