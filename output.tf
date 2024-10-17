@@ -77,3 +77,5 @@ output "exampleoutput" {
 output "character_enemy_output" {
   value = local.character_enemy_map
 }
+output "myappoutput" {
+value= "list_of_string" 
