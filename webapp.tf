@@ -28,18 +28,20 @@ resource "azurerm_app_service_plan" "plan_canada_central" {
 }
 
 # Web Apps
-resource "azurerm_app_service" "webapp_east_us" {
-  name                = "my-webapp-eastus"
+resource "azurerm_app_service" "webapp_canada_east" {
+  name                = "my-webapp-canadaeast"
   location            = azurerm_resource_group.rg_canada_east.location
   resource_group_name = azurerm_resource_group.rg_canada_east.name
   app_service_plan_id = azurerm_app_service_plan.plan_canada_east.id
+site_config {}
 
 }
 
-resource "azurerm_app_service" "webapp_west_europe" {
-  name                = "my-webapp-westeurope"
+resource "azurerm_app_service" "webapp_canada_central" {
+  name                = "my-webapp-canadacentral"
   location            = azurerm_resource_group.rg_canada_central.location
   resource_group_name = azurerm_resource_group.rg_canada_central.name
   app_service_plan_id = azurerm_app_service_plan.plan_canada_central.id
-
+site_config {}
 }
+
