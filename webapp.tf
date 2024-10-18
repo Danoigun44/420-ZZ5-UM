@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_resource_group" "RG-420-ZZZ-UM" {
   name     = "420-ZZZ-UM-resources"
   location = "Canadacentral"
