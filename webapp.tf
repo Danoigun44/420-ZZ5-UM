@@ -1,8 +1,8 @@
-resource "azurerm_resource_group1" "RG-420-ZZZ-UM" {
+resource "azurerm_resource_group" "RG-420-ZZZ-UM" {
   name     = "420-ZZZ-UM-resources"
   location = "Canadacentral"
 }
-resource "azurerm_resource_group2" "RG-520-ZZZ-UM" {
+resource "azurerm_resource_group" "RG-520-ZZZ-UM" {
   name     = "520-ZZZ-UM-resources"
   location = "Canadaeast"
 }
