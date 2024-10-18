@@ -32,7 +32,7 @@ resource "azurerm_windows_web_app" "webapp_canada_east" {
   name                = "my-webapp-canadaeast"
   location            = azurerm_resource_group.rg_canada_east.location
   resource_group_name = azurerm_resource_group.rg_canada_east.name
-  app_service_plan_id = azurerm_service_plan.plan_canada_east.id
+  service_plan_id = azurerm_service_plan.plan_canada_east.id
 site_config {}
 
 }
@@ -41,7 +41,7 @@ resource "azurerm_windows_web_app" "webapp_canada_central" {
   name                = "my-webapp-canadacentral"
   location            = azurerm_resource_group.rg_canada_central.location
   resource_group_name = azurerm_resource_group.rg_canada_central.name
-  app_service_plan_id = azurerm_service_plan.plan_canada_central.id
+  service_plan_id = azurerm_service_plan.plan_canada_central.id
 site_config {}
 }
 
