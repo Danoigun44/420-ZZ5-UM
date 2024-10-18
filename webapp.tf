@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "rg_canada_central" {
   location = "canadacentral"
 }
 
-# App Service Plans
+/*# App Service Plans
 resource "azurerm_app_service_plan" "plan_canada_east" {
   name                = "appserviceplan-canadaeast"
   location            = azurerm_resource_group.rg_canada_east.location
@@ -44,4 +44,4 @@ resource "azurerm_app_service" "webapp_canada_central" {
   app_service_plan_id = azurerm_app_service_plan.plan_canada_central.id
 site_config {}
 }
-
+*/
