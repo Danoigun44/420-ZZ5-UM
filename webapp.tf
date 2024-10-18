@@ -1,38 +1,45 @@
-resource "azurerm_resource_group" "RG-420-ZZZ-UM" {
-  name     = "420-ZZZ-UM-resources"
-  location = "Canadacentral"
+
+# Resource Groups
+resource "azurerm_resource_group" "rg_canada_east" {
+  name     = "rg-webapp-canadaeast"
+  location = "canadaeast"
 }
-resource "azurerm_resource_group" "RG-520-ZZZ-UM" {
-  name     = "520-ZZZ-UM-resources"
-  location = "Canadaeast"
+
+resource "azurerm_resource_group" "rg_canada_central" {
+  name     = "rg-webapp-canadacentral"
+  location = "canadacentral"
 }
-resource "azurerm_service_plan" "service-plan1" {
-  name                = "420-ZZZ-UM-service-plan"
-  resource_group_name = azurerm_resource_group.RG-420-ZZZ-UM.name
-  location            = azurerm_resource_group.RG-420-ZZZ-UM.location
-  sku_name            = "P1v2"
+
+# App Service Plans
+resource "azurerm_app_service_plan" "plan_canada_east" {
+  name                = "appserviceplan-canadaeast"
+  location            = azurerm_resource_group.rg_canada_east.location
+  resource_group_name = azurerm_resource_group.rg_canada_east.name
+    sku_name            = "P1v2"
   os_type             = "Windows"
 }
-resource "azurerm_service_plan" "service-plan2" {
-  name                = "520-ZZZ-UM-service-plan"
-  resource_group_name = azurerm_resource_group.RG-520-ZZZ-UM.name
-  location            = azurerm_resource_group.RG-520-ZZZ-UM.location
-  sku_name            = "P1v2"
-  os_type             = "linux"
-}
-resource "azurerm_windows_web_app" "webapp1" {
-  name                = "webapp1"
-  resource_group_name = azurerm_resource_group.RG-420-ZZZ-UM.name
-  location            = azurerm_service_plan.RG-420-ZZZ-UM.location
-  service_plan_id     = azurerm_service_plan.service-plan1.id
 
-  site_config {}
+resource "azurerm_app_service_plan" "plan_canada_central" {
+  name                = "appserviceplan-westeurope"
+  location            = azurerm_resource_group.rg_canada_central.location
+  resource_group_name = azurerm_resource_group.rg_canada_central.name
+    sku_name            = "P1v2"
+  os_type             = "Windows"
 }
-resource "azurerm_windows_web_app" "webapp2" {
-  name                = "webapp2"
-  resource_group_name = azurerm_resource_group.RG-520-ZZZ-UM.name
-  location            = azurerm_service_plan.RG-520-ZZZ-UM.location
-  service_plan_id     = azurerm_service_plan.service-plan2.id
 
-  site_config {}
+# Web Apps
+resource "azurerm_app_service" "webapp_east_us" {
+  name                = "my-webapp-eastus"
+  location            = azurerm_resource_group.rg_canada_east.location
+  resource_group_name = azurerm_resource_group.rg_canada_east.name
+  app_service_plan_id = azurerm_app_service_plan.plan_canada_east.id
+
+}
+
+resource "azurerm_app_service" "webapp_west_europe" {
+  name                = "my-webapp-westeurope"
+  location            = azurerm_resource_group.rg_canada_central.location
+  resource_group_name = azurerm_resource_group.rg_canada_central.name
+  app_service_plan_id = azurerm_app_service_plan.plan_canada_central.id
+
 }
