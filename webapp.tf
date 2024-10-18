@@ -11,15 +11,15 @@ resource "azurerm_resource_group" "rg_canada_central" {
 }
 
 
-resource "azurerm_app_service_plan" "plan_canada_east" {
+resource "azurerm_service_plan" "plan_canada_east" {
   name                = "appserviceplan-canadaeast"
   location            = azurerm_resource_group.rg_canada_east.location
   resource_group_name = azurerm_resource_group.rg_canada_east.name
-    sku_name            = "P1v2"
+    sku_name           = "P1v2"
   os_type             = "Windows"
 }
 /*
-resource "azurerm_app_service_plan" "plan_canada_central" {
+resource "azurerm_service_plan" "plan_canada_central" {
   name                = "appserviceplan-canadacentral"
   location            = azurerm_resource_group.rg_canada_central.location
   resource_group_name = azurerm_resource_group.rg_canada_central.name
