@@ -18,7 +18,7 @@ resource "azurerm_service_plan" "plan_canada_east" {
     sku_name           = "P1v2"
   os_type             = "Windows"
 }
-/*
+
 resource "azurerm_service_plan" "plan_canada_central" {
   name                = "appserviceplan-canadacentral"
   location            = azurerm_resource_group.rg_canada_central.location
@@ -28,20 +28,20 @@ resource "azurerm_service_plan" "plan_canada_central" {
 }
 
 # Web Apps
-resource "azurerm_app_service" "webapp_canada_east" {
+resource "azurerm_windows_web_app" "webapp_canada_east" {
   name                = "my-webapp-canadaeast"
   location            = azurerm_resource_group.rg_canada_east.location
   resource_group_name = azurerm_resource_group.rg_canada_east.name
-  app_service_plan_id = azurerm_app_service_plan.plan_canada_east.id
+  app_service_plan_id = azurerm_service_plan.plan_canada_east.id
 site_config {}
 
 }
 
-resource "azurerm_app_service" "webapp_canada_central" {
+resource "azurerm_windows_web_app" "webapp_canada_central" {
   name                = "my-webapp-canadacentral"
   location            = azurerm_resource_group.rg_canada_central.location
   resource_group_name = azurerm_resource_group.rg_canada_central.name
-  app_service_plan_id = azurerm_app_service_plan.plan_canada_central.id
+  app_service_plan_id = azurerm_service_plan.plan_canada_central.id
 site_config {}
 }
-*/
+
