@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "rg_canada_central" {
   location = "canadacentral"
 }
 
-/*# App Service Plans
+
 resource "azurerm_app_service_plan" "plan_canada_east" {
   name                = "appserviceplan-canadaeast"
   location            = azurerm_resource_group.rg_canada_east.location
@@ -18,7 +18,7 @@ resource "azurerm_app_service_plan" "plan_canada_east" {
     sku_name            = "P1v2"
   os_type             = "Windows"
 }
-
+/*
 resource "azurerm_app_service_plan" "plan_canada_central" {
   name                = "appserviceplan-canadacentral"
   location            = azurerm_resource_group.rg_canada_central.location
