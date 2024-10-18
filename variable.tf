@@ -52,9 +52,11 @@ variable "list_of_string" {
 type=list(string)
 default= ["name","resource"]
 }
-variable "azurerm_resource_group" "RG-420-ZZZ-UM" {
+variable "azurerm_resource_group"  {
   type= string
+  default="RG-420-ZZZ-UM"
 }
-variable "azurerm_resource_group" "RG-520-ZZZ-UM" {
+variable "azurerm_resource_group"{
   type= string
+default= "RG-520-ZZZ-UM" 
 }
