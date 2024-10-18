@@ -52,7 +52,3 @@ variable "list_of_string" {
 type=list(string)
 default= ["name","resource"]
 }
-variable "list_of_string" {
-type=list(string)
-default= ["name","resource"]
-}
