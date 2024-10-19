@@ -49,12 +49,7 @@ output "client_certificate" {
   ]
 }
 
-output "cluster_ca_certificate" {
-  sensitive = true
-  value = [
-    for cluster in azurerm_kubernetes_cluster.batchabcd: cluster.kube_config.0.cluster_ca_certificate
-  ]
-}
+
 
 output "host" {
   sensitive = true
