@@ -1,17 +1,18 @@
 #This is an Azure Montreal College Tutorial for Storage Account creation--->Storage Container name Creation--->Storage Blob Creation
 locals{ 
-  webapp_names=["k1webapp06","k2webapp06","k3webapp06","k4webapp06","k5webapp06"]
+  cluster_names=["k8webapp06","k9webapp06","k10webapp06","k11webapp06","k12webapp06"]
 }
-resource "azurerm_resource_group" "rg-azgroup" {
-  name     = "az_resource_group"
-  location = "Canadacentral"
+resource "azurerm_resource_group" "rg-az-group" {
+  name     = "rg_az_group"
+  location = "Canada Central"
 }
-resource "azurerm_kubernetes_webapp" "batchabcd" {
-  for_each            = {for webapp in local.webapp_names: cluster=>cluster}
-  name                = "${var.prefix}cluster"
-  location            = azurerm_resource_group.rg-azgroup.location
-  resource_group_name = azurerm_resource_group.rg-azgroup.name
-  dns_prefix          = "exampleaks1"
+
+resource "azurerm_kubernetes_cluster" "batchabcd" {
+  for_each            = {for cluster in var.classworkclusters: cluster=>cluster}
+  name                = "${var.prefix}${each.key}"
+  location            = azurerm_resource_group.rg-az-group.location
+  resource_group_name = azurerm_resource_group.rg-az-group.name
+  dns_prefix          = var.dnsprefix
 
   default_node_pool {
     name       = "default"
@@ -29,19 +30,12 @@ resource "azurerm_kubernetes_webapp" "batchabcd" {
 }
 /*
 output "client_certificate" {
-  value     = [for webapp in azurerm_kubernetes_webapp.batchabcd:webapp.kube_config.0.client_certificate]
+  value     = [for cluster in azurerm_kubernetes_cluster.batchabcd:cluster.kube_config.0.client_certificate]
   sensitive = true
 }
 
 output "kube_config" {
-  value = [for webapp in azurerm_kubernetes_webapp.batchabcd: webapp.kube_config_raw]
+  value = [for cluster in azurerm_kubernetes_cluster.batchabcd: cluster.kube_config_raw]
 
   sensitive = true
 }
-output "kube_id"{
-  value=[for webapp in azurerm_kubernetes_webapp.batchabcd:webapp.id ]
-}
-output "kube_name"{
-  value=[for webapp in azurerm_kubernetes_webapp.batchabcd:webapp.name ]
-}
-*/
