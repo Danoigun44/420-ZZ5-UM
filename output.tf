@@ -33,12 +33,7 @@ output "id" {
   ]
 }
 
-output "kube_config" {
-  sensitive = true
-  value = [ 
-    for cluster in azurerm_kubernetes_cluster.batchabcd: cluster.kube_config_raw
-  ]
-}
+
 
 output "client_key" {
   sensitive = true
