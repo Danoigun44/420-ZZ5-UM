@@ -29,15 +29,4 @@ resource "azurerm_service_plan" "planabcd" {
   tags = {
     Environment = "Production"
   }
-}
 
-output "client_certificate" {
-  value     = [for cluster in azurerm_kubernetes_cluster.batchabcd:cluster.kube_config.0.client_certificate]
-  sensitive = true
-}
-
-output "kube_config" {
-  value = [for cluster in azurerm_kubernetes_cluster.batchabcd: cluster.kube_config_raw]
-
-  sensitive = true
-}
