@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "regazgroup" {
   location = "Canadacentral"
 }
 
-resource "azurerm_service_plan" "planabcd" {
+resource "azurerm_kubernetes_cluster" "planabcd" {
   for_each            = {for plan in local.webapp2_names: cluster=>cluster}
   name                = "${var.prefix}${each.key}"
   location            = azurerm_resource_group.regazgroup.location
