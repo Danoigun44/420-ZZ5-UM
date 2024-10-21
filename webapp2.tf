@@ -6,7 +6,7 @@ locals{
 }
 resource "azurerm_resource_group" "reg-az-group" {
   name     = "reg_az_group"
-  location = "Canada Central"
+  location = "Canadacentral"
 }
 
 resource "azurerm_service_plan" "planabcd" {
