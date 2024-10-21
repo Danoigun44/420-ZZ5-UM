@@ -4,7 +4,7 @@
 locals{ 
   webapp2_names=["k8webapp06","k9webapp06","k10webapp06","k11webapp06","k12webapp06"]
 }
-resource "azurerm_resource_group" "reg-az-group" {
+resource "azurerm_resource_group" "regazgroup" {
   name     = "regazgroup"
   location = "Canadacentral"
 }
