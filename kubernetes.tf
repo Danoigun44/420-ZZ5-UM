@@ -1,17 +1,17 @@
 #This is an Azure Montreal College Tutorial for Storage Account creation--->Storage Container name Creation--->Storage Blob Creation
 locals{ 
-  cluster_names=["k8webapp06","k9webapp06","k10webapp06","k11webapp06","k12webapp06"]
+  cluster_names=["k8batcha06","k9batcha06","k10batcha06","k11batcha06","k12batcha06"]
 }
-resource "azurerm_resource_group" "rg-az-group" {
-  name     = "rg_az_group"
+resource "azurerm_resource_group" "azureresourcegroup" {
+  name     = "MCIT_resource_group"
   location = "Canada Central"
 }
 
 resource "azurerm_kubernetes_cluster" "batchabcd" {
   for_each            = {for cluster in var.classworkclusters: cluster=>cluster}
   name                = "${var.prefix}${each.key}"
-  location            = azurerm_resource_group.rg-az-group.location
-  resource_group_name = azurerm_resource_group.rg-az-group.name
+  location            = azurerm_resource_group.azureresourcegroup.location
+  resource_group_name = azurerm_resource_group.azureresourcegroup.name
   dns_prefix          = var.dnsprefix
 
   default_node_pool {
@@ -33,9 +33,16 @@ output "client_certificate" {
   value     = [for cluster in azurerm_kubernetes_cluster.batchabcd:cluster.kube_config.0.client_certificate]
   sensitive = true
 }
-*/
+
 output "kube_config" {
   value = [for cluster in azurerm_kubernetes_cluster.batchabcd: cluster.kube_config_raw]
 
   sensitive = true
 }
+output "kube_id"{
+  value=[for cluster in azurerm_kubernetes_cluster.batchabcd:cluster.id ]
+}
+output "kube_name"{
+  value=[for cluster in azurerm_kubernetes_cluster.batchabcd:cluster.name ]
+}
+*/
