@@ -60,3 +60,11 @@ variable "azurerm_resource_group2"{
   type= string
 default= "RG-520-ZZZ-UM" 
 }
+variable "classworkclusters"{
+  type= string
+  default= "cluster"
+}
+variable "dnsprefix" {
+   type= string
+   default= "dns"
+}
