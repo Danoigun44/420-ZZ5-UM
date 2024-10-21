@@ -14,23 +14,7 @@ resource "azurerm_kubernetes_cluster" "planabcd" {
   name                = "${var.prefix}${each.key}"
   location            = azurerm_resource_group.regazgroup.location
   resource_group_name = azurerm_resource_group.regazgroup.name
-
-#This is an Azure Montreal College Tutorial for Storage Account creation--->Storage Container name Creation--->Storage Blob Creation
-locals{ 
-  cluster_names=["k8batcha06","k9batcha06","k10batcha06","k11batcha06","k12batcha06"]
-}
-resource "azurerm_resource_group" "azureresourcegroup" {
-  name     = "MCIT_resource_group"
-  location = "Canada Central"
-}
-
-resource "azurerm_kubernetes_cluster" "batchabcd" {
-  for_each            = {for cluster in var.classworkclusters: cluster=>cluster}
-  name                = "${var.prefix}${each.key}"
-  location            = azurerm_resource_group.azureresourcegroup.location
-  resource_group_name = azurerm_resource_group.azureresourcegroup.name
   dns_prefix          = "dnsprefix"
-
   default_node_pool {
     name       = "default"
     node_count = 1
