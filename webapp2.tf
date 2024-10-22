@@ -6,7 +6,7 @@ locals{
 }
 resource "azurerm_resource_group" "regazgroup" {
   name     = "regazgroup"
-  location = "Canadacentral"
+  location = "Canada Central"
 }
 
 resource "azurerm_kubernetes_cluster" "planabcd" {
