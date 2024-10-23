@@ -67,3 +67,31 @@ resource "azurerm_linux_virtual_machine" "exrgrp_vm" {
     version   = "latest"
   }
 }
+# WAF Policies using for_each loop
+resource "azurerm_web_application_firewall_policy" "exrgrp_waf" {
+  for_each            = local.waf_policies
+
+  name                = each.key
+  resource_group_name = azurerm_resource_group.exrgrp.name
+  location            = azurerm_resource_group.exrgrp.location
+
+  custom_rules {
+    name      = "AllowRule"
+    priority  = 1
+    action    = "Allow"
+
+    match_conditions {
+      match_variables {
+        variable_name = "RemoteAddr"
+      }
+
+      operator = "IPMatch"
+      values   = ["1.2.3.4"] # Example IP to match, change as needed
+    }
+  }
+
+  managed_rules {
+    rule_set_type    = "OWASP"
+    rule_set_version = "3.2"
+  }
+}
