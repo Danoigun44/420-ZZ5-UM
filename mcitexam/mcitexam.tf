@@ -1,52 +1,52 @@
 # Resource Group for both VMs and WAF Policies
-resource "azurerm_resource_group" "exrgrp" {
-  name     = "exrgrp-resource-group"
+resource "azurerm_resource_group" "regazgroup" {
+  name     = "regazgroup-resource-group"
   location = "canadacentral"
 }
 
 # Virtual Network for VMs
 resource "azurerm_virtual_network" "exrgrp_vnet" {
-  name                = "exrgrp-vnet"
+  name                = "regazgroup-vnet"
   address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.exrgrp.location
-  resource_group_name = azurerm_resource_group.exrgrp.name
+  location            = azurerm_resource_group.regazgroup.location
+  resource_group_name = azurerm_resource_group.regazgroup.name
 }
 
 # Subnet for VMs
-resource "azurerm_subnet" "exrgrp_subnet" {
-  name                 = "exrgrp-subnet"
-  resource_group_name  = azurerm_resource_group.exrgrp.name
-  virtual_network_name = azurerm_virtual_network.exrgrp_vnet.name
+resource "azurerm_subnet" "regazgroup_subnet" {
+  name                 = "regazgroup-subnet"
+  resource_group_name  = azurerm_resource_group.regazgroup.name
+  virtual_network_name = azurerm_virtual_network.regazgroup_vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
 # Network Interfaces for VMs
-resource "azurerm_network_interface" "exrgrp_nic" {
+resource "azurerm_network_interface" "regazgroup_nic" {
   for_each            = toset(local.vms)
   name                = "${each.value}-nic"
-  location            = azurerm_resource_group.exrgrp.location
-  resource_group_name = azurerm_resource_group.exrgrp.name
+  location            = azurerm_resource_group.regazgroup.location
+  resource_group_name = azurerm_resource_group.regazgroup.name
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.exrgrp_subnet.id
+    subnet_id                     = azurerm_subnet.regazgroup_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
 # Virtual Machines using for_each loop
-resource "azurerm_linux_virtual_machine" "exrgrp_vm" {
+resource "azurerm_linux_virtual_machine" "regazgroup_vm" {
   for_each            = toset(local.vms)
 
   name                = each.value
-  resource_group_name = azurerm_resource_group.exrgrp.name
-  location            = azurerm_resource_group.exrgrp.location
+  resource_group_name = azurerm_resource_group.regazgroup.name
+  location            = azurerm_resource_group.regazgroup.location
   size                = "Standard_B1ms"
 
   admin_username      = "adminuser"
 
   network_interface_ids = [
-    azurerm_network_interface.example_nic[each.value].id
+    azurerm_network_interface.regazgroup_nic[each.value].id
   ]
 
   admin_ssh_key {
@@ -68,12 +68,12 @@ resource "azurerm_linux_virtual_machine" "exrgrp_vm" {
   }
 }
 # WAF Policies using for_each loop
-resource "azurerm_web_application_firewall_policy" "exrgrp_waf" {
+resource "azurerm_web_application_firewall_policy" "regazgroup_waf" {
   for_each            = local.waf_policies
 
   name                = each.key
-  resource_group_name = azurerm_resource_group.exrgrp.name
-  location            = azurerm_resource_group.exrgrp.location
+  resource_group_name = azurerm_resource_group.regazgroup.name
+  location            = azurerm_resource_group.regazgroup.location
 
   custom_rules {
     name      = "AllowRule"
