@@ -2,7 +2,7 @@
 resource "azurerm_linux_virtual_machine" "Virtualmachines"{
   for_each = var.vms_names
   name = each.value
-
+}
 resource "azurerm_resource_group" "rgvms" {
   name     = "rgvms-resources"
   location = "canadacentral"
