@@ -1,4 +1,4 @@
-# Resource Group for both VMs and WAF Policies
+/*# Resource Group for both VMs and WAF Policies
 resource "azurerm_resource_group" "regazgroup" {
   name     = "regazgroup-resource-group"
   location = "canadacentral"
@@ -95,3 +95,4 @@ resource "azurerm_web_application_firewall_policy" "regazgroup_waf" {
     rule_set_version = "3.2"
   }
 }
+*/
