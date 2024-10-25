@@ -68,3 +68,24 @@ variable "dnsprefix" {
    type= string
    default= "dns"
 }
+# Define variables for resource group, location, and VM names
+variable "resource_group_name" {
+  type    = string
+  default = "example-resource-group"
+}
+
+variable "location" {
+  type    = string
+  default = "East US"
+}
+
+variable "vm_names" {
+  type    = map(string)
+  default = {
+    vm1 = "mcitexamvm1"
+    vm2 = "mcitexamvm2"
+    vm3 = "mcitexamvm3"
+    vm4 = "mcitexamvm4"
+    vm5 = "mcitexamvm5"
+  }
+}
