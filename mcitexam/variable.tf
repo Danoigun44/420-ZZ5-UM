@@ -1,6 +1,6 @@
 variable "resource_group_name" {
-  description = "The name of the resource group"
-  type        = string
+  type    = string
+  default = "mcit420zz5um-resource-group"
 }
 
 variable "location" {
