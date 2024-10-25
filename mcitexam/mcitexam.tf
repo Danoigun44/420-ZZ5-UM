@@ -1,97 +1,92 @@
-# Resource Group for both VMs and WAF Policies
-resource "azurerm_resource_group" "regazgroup" {
-  name     = "regazgroup-resource-group"
+
+resource "azurerm_linux_virtual_machine" "Virtualmachines"{
+  for_each = var.vms_names
+  name = each.value
+
+resource "azurerm_resource_group" "rgvms" {
+  name     = "rgvms-resources"
   location = "canadacentral"
 }
 
-# Virtual Network for VMs
-resource "azurerm_virtual_network" "exrgrp_vnet" {
-  name                = "regazgroup-vnet"
+resource "azurerm_virtual_network" "example" {
+  name                = "example-network"
   address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.regazgroup.location
-  resource_group_name = azurerm_resource_group.regazgroup.name
+  location            = azurerm_resource_group.mcit420zz5um.location
+  resource_group_name = azurerm_resource_group.mcit420zz5um.name
 }
 
-# Subnet for VMs
-resource "azurerm_subnet" "regazgroup_subnet" {
-  name                 = "regazgroup-subnet"
-  resource_group_name  = azurerm_resource_group.regazgroup.name
-  virtual_network_name = azurerm_virtual_network.regazgroup_vnet.name
+resource "azurerm_subnet" "example" {
+  name                 = "mcitexam-subnet"
+  resource_group_name  = azurerm_resource_group.mcit420zz5um.name
+  virtual_network_name = azurerm_virtual_network.example.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-# Network Interfaces for VMs
-resource "azurerm_network_interface" "regazgroup_nic" {
-  for_each            = toset(local.vms)
-  name                = "${each.value}-nic"
-  location            = azurerm_resource_group.regazgroup.location
-  resource_group_name = azurerm_resource_group.regazgroup.name
+resource "azurerm_network_interface" "example" {
+  for_each            = toset(var.vm_names)
+  name                = "${each.key}-nic"
+  location            = azurerm_resource_group.mcit420zz5um.location
+  resource_group_name = azurerm_resource_group.mcit420zz5um.name
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.regazgroup_subnet.id
+    subnet_id                     = azurerm_subnet.example.id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
-# Virtual Machines using for_each loop
-resource "azurerm_linux_virtual_machine" "regazgroup_vm" {
-  for_each            = toset(local.vms)
+resource "azurerm_virtual_machine" "example" {
+  for_each               = toset(var.vm_names)
+  name                   = each.key
+  location               = var.location
+  resource_group_name = azurerm_resource_group.mcit420zz5um.name
+  network_interface_ids  = [azurerm_network_interface.example[each.key].id]
+  vm_size                = var.vm_size
 
-  name                = each.value
-  resource_group_name = azurerm_resource_group.regazgroup.name
-  location            = azurerm_resource_group.regazgroup.location
-  size                = "Standard_B1ms"
-
-  admin_username      = "adminuser"
-
-  network_interface_ids = [
-    azurerm_network_interface.regazgroup_nic[each.value].id
-  ]
-
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
-  os_disk {
-    name              = "${each.value}_osdisk"
-    caching           = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
+   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
     version   = "latest"
   }
-}
-# WAF Policies using for_each loop
-resource "azurerm_web_application_firewall_policy" "regazgroup_waf" {
-  for_each            = local.waf_policies
 
-  name                = each.key
-  resource_group_name = azurerm_resource_group.regazgroup.name
-  location            = azurerm_resource_group.regazgroup.location
-
-  custom_rules {
-    name      = "AllowRule"
-    type      = string
-    priority  = 1
-    action    = "Allow"
-
-    match_conditions {
-      match_variables {
-        variable_name = "RemoteAddr"
-      }
-
-      operator = "IPMatch"
-    }
+  storage_os_disk {
+    name              = "${each.key}-osdisk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
   }
 
-  managed_rules {
-    rule_set_type    = "OWASP"
+  os_profile {
+    computer_name  = each.key
+    admin_username = var.admin_username
+    admin_password = var.admin_password
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
   }
 }
+
+
+resource "null_resource" "food_items" {
+  for_each = toset(var.foods)
+
+  provisioner "local-exec" {
+    command = "echo 'Preparing ${each.key}'"
+  }
+}
+
+
+
+
+
+resource "null_resource" "car_brands" {
+  for_each = toset(var.cars)
+
+  provisioner "local-exec" {
+    command = "echo 'This is a ${each.key} car'"
+  }
+}
+
 
