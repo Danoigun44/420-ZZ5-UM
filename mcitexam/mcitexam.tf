@@ -77,6 +77,7 @@ resource "azurerm_web_application_firewall_policy" "regazgroup_waf" {
 
   custom_rules {
     name      = "AllowRule"
+    type      = string
     priority  = 1
     action    = "Allow"
 
@@ -86,13 +87,11 @@ resource "azurerm_web_application_firewall_policy" "regazgroup_waf" {
       }
 
       operator = "IPMatch"
-      values   = ["1.2.3.4"] # Example IP to match, change as needed
     }
   }
 
   managed_rules {
     rule_set_type    = "OWASP"
-    rule_set_version = "3.2"
   }
 }
 
