@@ -71,12 +71,12 @@ variable "dnsprefix" {
 # Define variables for resource group, location, and VM names
 variable "resource_group_name" {
   type    = string
-  default = "example-resource-group"
+  default = "mcit420zz5um-resource-group"
 }
 
 variable "location" {
   type    = string
-  default = "East US"
+  default = "canadacentral"
 }
 
 variable "vm_names" {
