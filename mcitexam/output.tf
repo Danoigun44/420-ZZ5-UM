@@ -8,3 +8,4 @@ output "vm_ids" {
 output "waf_policy_ids" {
   description = "The IDs of the WAF policies"
   value       = { for waf in azurerm_web_application_firewall_policy.regazgroup_waf : waf.name => waf.id }
+}
