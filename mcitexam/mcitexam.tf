@@ -1,7 +1,8 @@
 
 resource "azurerm_linux_virtual_machine" "Virtualmachines"{
-  for_each = var.vms_names
+  for_each = var.vm_names
   name = each.value
+ resource_group_name = azurerm_resource_group.mcit420zz5um.name
 }
 resource "azurerm_resource_group" "rgvms" {
   name     = "rgvms-resources"
