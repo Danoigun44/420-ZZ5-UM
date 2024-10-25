@@ -1,4 +1,4 @@
-# Define the names of the VMs and WAF policies
+/*# Define the names of the VMs and WAF policies
 locals {
   vms        = ["mcitexamvm1", "mcitexamvm2", "mcitexamvm3", "mcitexamvm4", "mcitexamvm5"]
   waf_policies = {
@@ -9,3 +9,4 @@ locals {
     "mcitwaf5" = "mcitexamvm5"
   }
 }
+*/
