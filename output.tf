@@ -70,3 +70,9 @@ output "character_enemy_output" {
 output "myappoutput" {
 value= var.list_of_string
 }
+
+# Outputs for the VM IDs
+output "vm_ids" {
+  description = "The IDs of the created VMs"
+  value       = { for name, vm in azurerm_linux_virtual_machine.example_vm : name => vm.id }
+}
