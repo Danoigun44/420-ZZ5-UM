@@ -7,7 +7,7 @@ variable "location" {
 
 variable "resource_group_name" {
   description = "Name of the resource group"
-  default     = "mcit-exam-rg"
+  default     = "mcit420zz5um"
 }
 
 variable "vm_names" {
