@@ -36,3 +36,8 @@ variable "foods" {
   type        = list(string)
   default     = ["rice", "beans", "bread", "fish", "chicken"]
 }
+variable "cars" {
+  description = "List of car brands"
+  type        = list(string)
+  default     = ["lambo", "mclaren", "bughati", "hellcat", "gtr"]
+}
