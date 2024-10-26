@@ -1,7 +1,7 @@
 
 
-resource "azurerm_resource_group" "rgvms" {
-  name     = "rgvms-resources"
+resource "azurerm_resource_group" "mcit420zz5um" {
+  name     = "mcit420zz5um"
   location = "canadacentral"
 }
 
